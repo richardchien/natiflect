@@ -30,6 +30,7 @@
 using namespace std;
 
 namespace natiflect {
+
     struct Exception {
     public:
         Exception() { msg = "Exception occurred."; };

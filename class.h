@@ -28,73 +28,83 @@
 #include <jni.h>
 
 #include "exception.h"
+#include "object.h"
 
 namespace natiflect {
-    class Class {
+
+    class Class : public Object<jclass> {
     public:
-        Class(JNIEnv *env, jclass clz);
+        Class(JNIEnv *env, jclass clz) : Object(env, clz) { };
 
         Class(JNIEnv *env, const char *name);
 
+        jclass GetJClass() { return GetValue(); };
+
+        void SetJClass(jclass clz) { SetValue(clz); }
+
 #pragma mark - Static Method
 
-        void Call_V(const char *name, const char *sig, ...);
+        void CallStatic_V(const char *name, const char *sig, ...);
 
-        jboolean Call_Z(const char *name, const char *sig, ...);
+        jboolean CallStatic_Z(const char *name, const char *sig, ...);
 
-        jbyte Call_B(const char *name, const char *sig, ...);
+        jbyte CallStatic_B(const char *name, const char *sig, ...);
 
-        jchar Call_C(const char *name, const char *sig, ...);
+        jchar CallStatic_C(const char *name, const char *sig, ...);
 
-        jshort Call_S(const char *name, const char *sig, ...);
+        jshort CallStatic_S(const char *name, const char *sig, ...);
 
-        jint Call_I(const char *name, const char *sig, ...);
+        jint CallStatic_I(const char *name, const char *sig, ...);
 
-        jlong Call_J(const char *name, const char *sig, ...);
+        jlong CallStatic_J(const char *name, const char *sig, ...);
 
-        jfloat Call_F(const char *name, const char *sig, ...);
+        jfloat CallStatic_F(const char *name, const char *sig, ...);
 
-        jdouble Call_D(const char *name, const char *sig, ...);
+        jdouble CallStatic_D(const char *name, const char *sig, ...);
 
-        jobject Call_L(const char *name, const char *sig, ...);
+        jobject CallStatic_L(const char *name, const char *sig, ...);
 
 #pragma mark - Static Field
 
-        jboolean Get_Z(const char *name);
+        jboolean GetStatic_Z(const char *name);
 
-        void Set_Z(const char *name, jboolean value);
+        void SetStatic_Z(const char *name, jboolean value);
 
-        jbyte Get_B(const char *name);
+        jbyte GetStatic_B(const char *name);
 
-        void Set_B(const char *name, jbyte value);
+        void SetStatic_B(const char *name, jbyte value);
 
-        jchar Get_C(const char *name);
+        jchar GetStatic_C(const char *name);
 
-        void Set_C(const char *name, jchar value);
+        void SetStatic_C(const char *name, jchar value);
 
-        jshort Get_S(const char *name);
+        jshort GetStatic_S(const char *name);
 
-        void Set_S(const char *name, jshort value);
+        void SetStatic_S(const char *name, jshort value);
 
-        jint Get_I(const char *name);
+        jint GetStatic_I(const char *name);
 
-        void Set_I(const char *name, jint value);
+        void SetStatic_I(const char *name, jint value);
 
-        jlong Get_J(const char *name);
+        jlong GetStatic_J(const char *name);
 
-        void Set_J(const char *name, jlong value);
+        void SetStatic_J(const char *name, jlong value);
 
-        jfloat Get_F(const char *name);
+        jfloat GetStatic_F(const char *name);
 
-        void Set_F(const char *name, jfloat value);
+        void SetStatic_F(const char *name, jfloat value);
 
-        jdouble Get_D(const char *name);
+        jdouble GetStatic_D(const char *name);
 
-        void Set_D(const char *name, jdouble value);
+        void SetStatic_D(const char *name, jdouble value);
 
-        jobject Get_L(const char *name, const char *sig);
+        jobject GetStatic_L(const char *name, const char *sig);
 
-        void Set_L(const char *name, const char *sig, jobject value);
+        void SetStatic_L(const char *name, const char *sig, jobject value);
+
+#pragma mark - Instance Method
+
+        Class GetSuperClass();
 
     private:
         jmethodID GetStaticMethodID(const char *name, const char *sig);
@@ -104,9 +114,6 @@ namespace natiflect {
         jfieldID GetStaticFieldID(const char *name, const char *sig);
 
         void CheckAccessFieldException(const char *name, const char *sig);
-
-        JNIEnv *env_;
-        jclass clz_;
     };
 }
 
