@@ -15,6 +15,30 @@ void LogTestPass(string test_name, bool passed) {
     cout << "Test \"" << test_name << "\" passed? " << (passed ? "YES" : "NO") << endl;
 }
 
+void TestException(JNIEnv *env) {
+    const string TAG = "TestException";
+
+    bool passed = true;
+
+    try {
+        throw Exception();
+    } catch (Exception e) {
+        if (e.msg != "Exception occurred.") {
+            passed = false;
+        }
+    }
+
+    try {
+        throw Exception("error");
+    } catch (Exception e) {
+        if (e.msg.substr(0, 10) != "Exception:") {
+            passed = false;
+        }
+    }
+
+    LogTestPass(TAG, passed);
+}
+
 void TestClassConstructor(JNIEnv *env) {
     const string TAG = "TestClassConstructor";
 
@@ -222,10 +246,67 @@ void TestClassCall_L(JNIEnv *env) {
     LogTestPass(TAG, passed);
 }
 
+void TestClassGetSet_Z(JNIEnv *env) {
+    const string TAG = "TestClassGetSet_Z";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/StaticFieldTest");
+        clz.Set_Z("sBoolean", "Z", 1);
+        if (clz.Get_Z("sBoolean", "Z") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestClassGetSet_B(JNIEnv *env) {
+    const string TAG = "TestClassGetSet_B";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/StaticFieldTest");
+        clz.Set_Z("sByte", "B", 1);
+        if (clz.Get_Z("sByte", "B") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestClassGetSet_C(JNIEnv *env) {
+    const string TAG = "TestClassGetSet_C";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/StaticFieldTest");
+        clz.Set_C("sChar", "C", 'a');
+        if (clz.Get_Z("sChar", "C") != 'a') {
+            passed = false;
+        };
+    } catch (Exception e) {
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
 extern "C" {
 
 JNIEXPORT void JNICALL Java_im_r_1c_java_Main_nativeTestAll(JNIEnv *env, jclass type) {
+    TestException(env);
+
     TestClassConstructor(env);
+
     TestClassCall_V(env);
     TestClassCall_Z(env);
     TestClassCall_B(env);
@@ -236,6 +317,10 @@ JNIEXPORT void JNICALL Java_im_r_1c_java_Main_nativeTestAll(JNIEnv *env, jclass 
     TestClassCall_F(env);
     TestClassCall_D(env);
     TestClassCall_L(env);
+
+    TestClassGetSet_Z(env);
+    TestClassGetSet_B(env);
+    TestClassGetSet_C(env);
 }
 
 }
