@@ -12,9 +12,7 @@ extern "C" {
  * Method:    nativeTestAll
  * Signature: ()V
  */
-JNIEXPORT void JNICALL
-        Java_im_r_1c_java_Main_nativeTestAll
-        (JNIEnv *, jclass);
+JNIEXPORT void JNICALL Java_im_r_1c_java_Main_nativeTestAll(JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }
