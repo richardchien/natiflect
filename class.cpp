@@ -155,42 +155,120 @@ namespace natiflect {
 
 #pragma mark -- Static Field
 
-    jboolean Class::Get_Z(const char *name, const char *sig) {
-        jfieldID field_id = GetStaticFieldID(name, sig);
+    jboolean Class::Get_Z(const char *name) {
+        jfieldID field_id = GetStaticFieldID(name, "Z");
         jboolean result = env_->GetStaticBooleanField(clz_, field_id);
-        CheckAccessFieldException(name, sig);
+        CheckAccessFieldException(name, "Z");
         return result;
     }
 
-    void Class::Set_Z(const char *name, const char *sig, jboolean value) {
-        jfieldID field_id = GetStaticFieldID(name, sig);
+    void Class::Set_Z(const char *name, jboolean value) {
+        jfieldID field_id = GetStaticFieldID(name, "Z");
         env_->SetStaticBooleanField(clz_, field_id, value);
-        CheckAccessFieldException(name, sig);
+        CheckAccessFieldException(name, "Z");
     }
 
-    jbyte Class::Get_B(const char *name, const char *sig) {
-        jfieldID field_id = GetStaticFieldID(name, sig);
+    jbyte Class::Get_B(const char *name) {
+        jfieldID field_id = GetStaticFieldID(name, "B");
         jbyte result = env_->GetStaticByteField(clz_, field_id);
-        CheckAccessFieldException(name, sig);
+        CheckAccessFieldException(name, "B");
         return result;
     }
 
-    void Class::Set_B(const char *name, const char *sig, jbyte value) {
-        jfieldID field_id = GetStaticFieldID(name, sig);
+    void Class::Set_B(const char *name, jbyte value) {
+        jfieldID field_id = GetStaticFieldID(name, "B");
         env_->SetStaticByteField(clz_, field_id, value);
-        CheckAccessFieldException(name, sig);
+        CheckAccessFieldException(name, "B");
     }
 
-    jchar Class::Get_C(const char *name, const char *sig) {
-        jfieldID field_id = GetStaticFieldID(name, sig);
+    jchar Class::Get_C(const char *name) {
+        jfieldID field_id = GetStaticFieldID(name, "C");
         jchar result = env_->GetStaticCharField(clz_, field_id);
+        CheckAccessFieldException(name, "C");
+        return result;
+    }
+
+    void Class::Set_C(const char *name, jchar value) {
+        jfieldID field_id = GetStaticFieldID(name, "C");
+        env_->SetStaticCharField(clz_, field_id, value);
+        CheckAccessFieldException(name, "C");
+    }
+
+    jshort Class::Get_S(const char *name) {
+        jfieldID field_id = GetStaticFieldID(name, "S");
+        jshort result = env_->GetStaticShortField(clz_, field_id);
+        CheckAccessFieldException(name, "S");
+        return result;
+    }
+
+    void Class::Set_S(const char *name, jshort value) {
+        jfieldID field_id = GetStaticFieldID(name, "S");
+        env_->SetStaticShortField(clz_, field_id, value);
+        CheckAccessFieldException(name, "S");
+    }
+
+    jint Class::Get_I(const char *name) {
+        jfieldID field_id = GetStaticFieldID(name, "I");
+        jint result = env_->GetStaticIntField(clz_, field_id);
+        CheckAccessFieldException(name, "I");
+        return result;
+    }
+
+    void Class::Set_I(const char *name, jint value) {
+        jfieldID field_id = GetStaticFieldID(name, "I");
+        env_->SetStaticIntField(clz_, field_id, value);
+        CheckAccessFieldException(name, "I");
+    }
+
+    jlong Class::Get_J(const char *name) {
+        jfieldID field_id = GetStaticFieldID(name, "J");
+        jlong result = env_->GetStaticLongField(clz_, field_id);
+        CheckAccessFieldException(name, "J");
+        return result;
+    }
+
+    void Class::Set_J(const char *name, jlong value) {
+        jfieldID field_id = GetStaticFieldID(name, "J");
+        env_->SetStaticLongField(clz_, field_id, value);
+        CheckAccessFieldException(name, "J");
+    }
+
+    jfloat Class::Get_F(const char *name) {
+        jfieldID field_id = GetStaticFieldID(name, "F");
+        jfloat result = env_->GetStaticFloatField(clz_, field_id);
+        CheckAccessFieldException(name, "F");
+        return result;
+    }
+
+    void Class::Set_F(const char *name, jfloat value) {
+        jfieldID field_id = GetStaticFieldID(name, "F");
+        env_->SetStaticFloatField(clz_, field_id, value);
+        CheckAccessFieldException(name, "F");
+    }
+
+    jdouble Class::Get_D(const char *name) {
+        jfieldID field_id = GetStaticFieldID(name, "D");
+        jdouble result = env_->GetStaticDoubleField(clz_, field_id);
+        CheckAccessFieldException(name, "D");
+        return result;
+    }
+
+    void Class::Set_D(const char *name, jdouble value) {
+        jfieldID field_id = GetStaticFieldID(name, "D");
+        env_->SetStaticDoubleField(clz_, field_id, value);
+        CheckAccessFieldException(name, "D");
+    }
+
+    jobject Class::Get_L(const char *name, const char *sig) {
+        jfieldID field_id = GetStaticFieldID(name, sig);
+        jobject result = env_->GetStaticObjectField(clz_, field_id);
         CheckAccessFieldException(name, sig);
         return result;
     }
 
-    void Class::Set_C(const char *name, const char *sig, jchar value) {
+    void Class::Set_L(const char *name, const char *sig, jobject value) {
         jfieldID field_id = GetStaticFieldID(name, sig);
-        env_->SetStaticCharField(clz_, field_id, value);
+        env_->SetStaticObjectField(clz_, field_id, value);
         CheckAccessFieldException(name, sig);
     }
 

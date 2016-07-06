@@ -60,29 +60,41 @@ namespace natiflect {
 
 #pragma mark - Static Field
 
-        jboolean Get_Z(const char *name, const char *sig);
+        jboolean Get_Z(const char *name);
 
-        void Set_Z(const char *name, const char *sig, jboolean value);
+        void Set_Z(const char *name, jboolean value);
 
-        jbyte Get_B(const char *name, const char *sig);
+        jbyte Get_B(const char *name);
 
-        void Set_B(const char *name, const char *sig, jbyte value);
+        void Set_B(const char *name, jbyte value);
 
-        jchar Get_C(const char *name, const char *sig);
+        jchar Get_C(const char *name);
 
-        void Set_C(const char *name, const char *sig, jchar value);
+        void Set_C(const char *name, jchar value);
 
-//        jshort Get_S(const char *name, const char *sig);
-//
-//        jint Get_I(const char *name, const char *sig);
-//
-//        jlong Get_J(const char *name, const char *sig);
-//
-//        jfloat Get_F(const char *name, const char *sig);
-//
-//        jdouble Get_D(const char *name, const char *sig);
-//
-//        jobject Get_L(const char *name, const char *sig);
+        jshort Get_S(const char *name);
+
+        void Set_S(const char *name, jshort value);
+
+        jint Get_I(const char *name);
+
+        void Set_I(const char *name, jint value);
+
+        jlong Get_J(const char *name);
+
+        void Set_J(const char *name, jlong value);
+
+        jfloat Get_F(const char *name);
+
+        void Set_F(const char *name, jfloat value);
+
+        jdouble Get_D(const char *name);
+
+        void Set_D(const char *name, jdouble value);
+
+        jobject Get_L(const char *name, const char *sig);
+
+        void Set_L(const char *name, const char *sig, jobject value);
 
     private:
         jmethodID GetStaticMethodID(const char *name, const char *sig);
