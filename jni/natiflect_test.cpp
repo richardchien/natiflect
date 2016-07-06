@@ -253,8 +253,8 @@ void TestClassGetSet_Z(JNIEnv *env) {
 
     try {
         Class clz(env, "im/r_c/java/StaticFieldTest");
-        clz.Set_Z("sBoolean", "Z", 1);
-        if (clz.Get_Z("sBoolean", "Z") != 1) {
+        clz.Set_Z("sBoolean", 1);
+        if (clz.Get_Z("sBoolean") != 1) {
             passed = false;
         };
     } catch (Exception e) {
@@ -271,8 +271,8 @@ void TestClassGetSet_B(JNIEnv *env) {
 
     try {
         Class clz(env, "im/r_c/java/StaticFieldTest");
-        clz.Set_Z("sByte", "B", 1);
-        if (clz.Get_Z("sByte", "B") != 1) {
+        clz.Set_B("sByte", 1);
+        if (clz.Get_B("sByte") != 1) {
             passed = false;
         };
     } catch (Exception e) {
@@ -289,8 +289,118 @@ void TestClassGetSet_C(JNIEnv *env) {
 
     try {
         Class clz(env, "im/r_c/java/StaticFieldTest");
-        clz.Set_C("sChar", "C", 'a');
-        if (clz.Get_Z("sChar", "C") != 'a') {
+        clz.Set_C("sChar", 'a');
+        if (clz.Get_C("sChar") != 'a') {
+            passed = false;
+        };
+    } catch (Exception e) {
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestClassGetSet_S(JNIEnv *env) {
+    const string TAG = "TestClassGetSet_S";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/StaticFieldTest");
+        clz.Set_S("sShort", 1);
+        if (clz.Get_S("sShort") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestClassGetSet_I(JNIEnv *env) {
+    const string TAG = "TestClassGetSet_I";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/StaticFieldTest");
+        clz.Set_I("sInt", 1);
+        if (clz.Get_I("sInt") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestClassGetSet_J(JNIEnv *env) {
+    const string TAG = "TestClassGetSet_J";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/StaticFieldTest");
+        clz.Set_J("sLong", 1);
+        if (clz.Get_J("sLong") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestClassGetSet_F(JNIEnv *env) {
+    const string TAG = "TestClassGetSet_F";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/StaticFieldTest");
+        clz.Set_F("sFloat", 1.5f);
+        if (clz.Get_F("sFloat") != 1.5f) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestClassGetSet_D(JNIEnv *env) {
+    const string TAG = "TestClassGetSet_D";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/StaticFieldTest");
+        clz.Set_D("sDouble", 1.5);
+        if (clz.Get_D("sDouble") != 1.5) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestClassGetSet_L(JNIEnv *env) {
+    const string TAG = "TestClassGetSet_L";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/StaticFieldTest");
+        jstring str = env->NewStringUTF("abc");
+        clz.Set_L("sObject", "Ljava/lang/Object;", str);
+        str = (jstring) clz.Get_L("sObject", "Ljava/lang/Object;");
+        if (env->GetStringLength(str) != 3) {
             passed = false;
         };
     } catch (Exception e) {
@@ -321,6 +431,12 @@ JNIEXPORT void JNICALL Java_im_r_1c_java_Main_nativeTestAll(JNIEnv *env, jclass 
     TestClassGetSet_Z(env);
     TestClassGetSet_B(env);
     TestClassGetSet_C(env);
+    TestClassGetSet_S(env);
+    TestClassGetSet_I(env);
+    TestClassGetSet_J(env);
+    TestClassGetSet_F(env);
+    TestClassGetSet_D(env);
+    TestClassGetSet_L(env);
 }
 
 }
