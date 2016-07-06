@@ -32,39 +32,32 @@ using namespace std;
 namespace natiflect {
     struct Exception {
     public:
-        Exception();
+        Exception() { msg = "Exception occurred."; };
 
-        Exception(const char *msg);
+        Exception(string message) { msg = "Exception: " + message; };
 
         string msg;
     };
 
-    struct NoSuchClassException : Exception {
+    struct NotFoundException : Exception {
     public:
-        NoSuchClassException();
+        NotFoundException() { };
 
-        NoSuchClassException(const char *name);
-    };
-
-    struct NoSuchStaticMethodException : Exception {
-    public:
-        NoSuchStaticMethodException();
-
-        NoSuchStaticMethodException(const char *name, const char *sig);
-    };
-
-    struct NoSuchMethodException : Exception {
-    public:
-        NoSuchMethodException();
-
-        NoSuchMethodException(const char *name, const char *sig);
+        NotFoundException(string message) : Exception(message) { };
     };
 
     struct InvokeException : Exception {
     public:
-        InvokeException();
+        InvokeException() { };
 
-        InvokeException(const char *name, const char *sig);
+        InvokeException(string message) : Exception(message) { };
+    };
+
+    struct AccessException : Exception {
+    public:
+        AccessException() { };
+
+        AccessException(string message) : Exception(message) { };
     };
 }
 

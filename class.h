@@ -37,6 +37,8 @@ namespace natiflect {
 
         Class(JNIEnv *env, const char *name);
 
+#pragma mark - Static Method
+
         void Call_V(const char *name, const char *sig, ...);
 
         jboolean Call_Z(const char *name, const char *sig, ...);
@@ -57,9 +59,40 @@ namespace natiflect {
 
         jobject Call_L(const char *name, const char *sig, ...);
 
+#pragma mark - Static Field
+
+        jboolean Get_Z(const char *name, const char *sig);
+
+        void Set_Z(const char *name, const char *sig, jboolean value);
+
+        jbyte Get_B(const char *name, const char *sig);
+
+        void Set_B(const char *name, const char *sig, jbyte value);
+
+        jchar Get_C(const char *name, const char *sig);
+
+        void Set_C(const char *name, const char *sig, jchar value);
+
+//        jshort Get_S(const char *name, const char *sig);
+//
+//        jint Get_I(const char *name, const char *sig);
+//
+//        jlong Get_J(const char *name, const char *sig);
+//
+//        jfloat Get_F(const char *name, const char *sig);
+//
+//        jdouble Get_D(const char *name, const char *sig);
+//
+//        jobject Get_L(const char *name, const char *sig);
+
     private:
         jmethodID GetStaticMethodID(const char *name, const char *sig);
-        void CheckMethodCallException(const char *name, const char *sig, va_list args);
+
+        void CheckCallMethodException(const char *name, const char *sig, va_list args);
+
+        jfieldID GetStaticFieldID(const char *name, const char *sig);
+
+        void CheckAccessFieldException(const char *name, const char *sig);
 
         JNIEnv *env_;
         jclass clz_;
