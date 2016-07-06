@@ -26,7 +26,6 @@
 #define NATIFLECT_CLASS_H
 
 #include <jni.h>
-#include <map>
 
 #include "exception.h"
 

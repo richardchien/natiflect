@@ -25,7 +25,7 @@
 #ifndef NATIFLECT_EXCEPTION_H
 #define NATIFLECT_EXCEPTION_H
 
-#include <iostream>
+#include <string>
 
 using namespace std;
 
