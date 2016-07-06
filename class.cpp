@@ -25,6 +25,9 @@
 #include "class.h"
 
 namespace natiflect {
+
+#pragma mark - Public
+
     Class::Class(JNIEnv *env, jclass clz) {
         env_ = env;
         clz_ = clz;
@@ -40,20 +43,53 @@ namespace natiflect {
     }
 
     void Class::Call_V(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
         va_list args;
         va_start(args, sig);
+        env_->CallStaticVoidMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+    }
+
+    jboolean Class::Call_Z(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
+        va_list args;
+        va_start(args, sig);
+        jboolean result = env_->CallStaticBooleanMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+        return result;
+    }
+
+    jbyte Class::Call_B(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
+        va_list args;
+        va_start(args, sig);
+        jbyte result = env_->CallStaticByteMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+        return result;
+    }
+
+#pragma mark - Private
+
+    jmethodID Class::GetStaticMethodID(const char *name, const char *sig) {
         jmethodID method_id = env_->GetStaticMethodID(clz_, name, sig);
         if (env_->ExceptionCheck()) {
             env_->ExceptionClear();
-            va_end(args);
             throw NoSuchStaticMethodException(name, sig);
         }
-        env_->CallStaticVoidMethodV(clz_, method_id, args);
+        return method_id;
+    }
+
+    void Class::CheckMethodCallException(const char *name, const char *sig, va_list args) {
         if (env_->ExceptionCheck()) {
             env_->ExceptionClear();
             va_end(args);
             throw InvokeException(name, sig);
         }
-        va_end(args);
     }
 }

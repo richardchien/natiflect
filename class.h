@@ -26,6 +26,7 @@
 #define NATIFLECT_CLASS_H
 
 #include <jni.h>
+#include <map>
 
 #include "exception.h"
 
@@ -37,7 +38,29 @@ namespace natiflect {
         Class(JNIEnv *env, const char *name);
 
         void Call_V(const char *name, const char *sig, ...);
+
+        jboolean Call_Z(const char *name, const char *sig, ...);
+
+        jbyte Call_B(const char *name, const char *sig, ...);
+//
+//        jchar Call_C(const char *name, const char *sig, ...);
+//
+//        jshort Call_S(const char *name, const char *sig, ...);
+//
+//        jint Call_I(const char *name, const char *sig, ...);
+//
+//        jlong Call_J(const char *name, const char *sig, ...);
+//
+//        jfloat Call_F(const char *name, const char *sig, ...);
+//
+//        jdouble Call_D(const char *name, const char *sig, ...);
+//
+//        jobject Call_L(const char *name, const char *sig, ...);
+
     private:
+        jmethodID GetStaticMethodID(const char *name, const char *sig);
+        void CheckMethodCallException(const char *name, const char *sig, va_list args);
+
         JNIEnv *env_;
         jclass clz_;
     };
