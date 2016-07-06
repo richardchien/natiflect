@@ -74,6 +74,83 @@ namespace natiflect {
         return result;
     }
 
+    jchar Class::Call_C(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
+        va_list args;
+        va_start(args, sig);
+        jchar result = env_->CallStaticCharMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+        return result;
+    }
+
+    jshort Class::Call_S(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
+        va_list args;
+        va_start(args, sig);
+        jshort result = env_->CallStaticShortMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+        return result;
+    }
+
+    jint Class::Call_I(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
+        va_list args;
+        va_start(args, sig);
+        jint result = env_->CallStaticIntMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+        return result;
+    }
+
+    jlong Class::Call_J(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
+        va_list args;
+        va_start(args, sig);
+        jlong result = env_->CallStaticLongMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+        return result;
+    }
+
+    jfloat Class::Call_F(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
+        va_list args;
+        va_start(args, sig);
+        jfloat result = env_->CallStaticFloatMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+        return result;
+    }
+
+    jdouble Class::Call_D(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
+        va_list args;
+        va_start(args, sig);
+        jdouble result = env_->CallStaticDoubleMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+        return result;
+    }
+
+    jobject Class::Call_L(const char *name, const char *sig, ...) {
+        jmethodID method_id = GetStaticMethodID(name, sig);
+
+        va_list args;
+        va_start(args, sig);
+        jobject result = env_->CallStaticObjectMethodV(clz_, method_id, args);
+        CheckMethodCallException(name, sig, args);
+        va_end(args);
+        return result;
+    }
+
 #pragma mark - Private
 
     jmethodID Class::GetStaticMethodID(const char *name, const char *sig) {

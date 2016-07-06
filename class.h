@@ -42,20 +42,20 @@ namespace natiflect {
         jboolean Call_Z(const char *name, const char *sig, ...);
 
         jbyte Call_B(const char *name, const char *sig, ...);
-//
-//        jchar Call_C(const char *name, const char *sig, ...);
-//
-//        jshort Call_S(const char *name, const char *sig, ...);
-//
-//        jint Call_I(const char *name, const char *sig, ...);
-//
-//        jlong Call_J(const char *name, const char *sig, ...);
-//
-//        jfloat Call_F(const char *name, const char *sig, ...);
-//
-//        jdouble Call_D(const char *name, const char *sig, ...);
-//
-//        jobject Call_L(const char *name, const char *sig, ...);
+
+        jchar Call_C(const char *name, const char *sig, ...);
+
+        jshort Call_S(const char *name, const char *sig, ...);
+
+        jint Call_I(const char *name, const char *sig, ...);
+
+        jlong Call_J(const char *name, const char *sig, ...);
+
+        jfloat Call_F(const char *name, const char *sig, ...);
+
+        jdouble Call_D(const char *name, const char *sig, ...);
+
+        jobject Call_L(const char *name, const char *sig, ...);
 
     private:
         jmethodID GetStaticMethodID(const char *name, const char *sig);
