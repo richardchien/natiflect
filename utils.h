@@ -19,28 +19,23 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //
-// Created by Richard Chien on 7/6/16.
+// Created by Richard Chien on 7/7/16.
 //
 
-#include "object.h"
+#ifndef NATIFLECT_UTILS_H
+#define NATIFLECT_UTILS_H
+
+#include <jni.h>
 
 namespace natiflect {
 
-#pragma mark - Base
+    jmethodID GetMethodID(JNIEnv *env, jclass clz, const char *name, const char *sig, bool is_static = false);
 
-    template<typename T>
-    bool Object<T>::Equals(Object<T> other) {
-        return env_->IsSameObject(val_, other.val_);
-    }
+    void CheckCallMethodException(JNIEnv *env, const char *name, const char *sig, va_list args, bool is_static = false);
 
-    template<typename T>
-    bool Object<T>::Equals(jobject other) {
-        return env_->IsSameObject(val_, other);
-    }
+    jfieldID GetFieldID(JNIEnv *env, jclass clz, const char *name, const char *sig, bool is_static = false);
 
-#pragma mark - Instance Method
-
-
+    void CheckAccessFieldException(JNIEnv *env, const char *name, const char *sig, bool is_static = false);
 }
 
-#include "object_template_explicit.h"
+#endif //NATIFLECT_UTILS_H

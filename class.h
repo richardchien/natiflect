@@ -106,14 +106,7 @@ namespace natiflect {
 
         Class GetSuperClass();
 
-    private:
-        jmethodID GetStaticMethodID(const char *name, const char *sig);
-
-        void CheckCallMethodException(const char *name, const char *sig, va_list args);
-
-        jfieldID GetStaticFieldID(const char *name, const char *sig);
-
-        void CheckAccessFieldException(const char *name, const char *sig);
+        jobject NewInstance(const char *constructor_sig);
     };
 }
 

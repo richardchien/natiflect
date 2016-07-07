@@ -32,12 +32,12 @@ namespace natiflect {
     template<typename T>
     class Object {
     public:
-        Object() { };
-
         Object(JNIEnv *env, T val) {
             env_ = env;
             val_ = val;
         };
+
+#pragma mark - Base
 
         T GetValue() { return val_; };
 
@@ -47,7 +47,31 @@ namespace natiflect {
 
         bool Equals(jobject other);
 
+#pragma mark - Instance Method
+
+//        void Call_V(const char *name, const char *sig, ...);
+//
+//        jboolean Call_Z(const char *name, const char *sig, ...);
+//
+//        jbyte Call_B(const char *name, const char *sig, ...);
+//
+//        jchar Call_C(const char *name, const char *sig, ...);
+//
+//        jshort Call_S(const char *name, const char *sig, ...);
+//
+//        jint Call_I(const char *name, const char *sig, ...);
+//
+//        jlong Call_J(const char *name, const char *sig, ...);
+//
+//        jfloat Call_F(const char *name, const char *sig, ...);
+//
+//        jdouble Call_D(const char *name, const char *sig, ...);
+//
+//        jobject Call_L(const char *name, const char *sig, ...);
+
     protected:
+        Object() { };
+
         JNIEnv *env_;
         T val_;
     };
