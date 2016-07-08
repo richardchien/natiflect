@@ -107,6 +107,8 @@ namespace natiflect {
         Class GetSuperClass();
 
         jobject NewInstance(const char *constructor_sig = "()V", ...);
+
+        jobject NewInstanceV(const char *constructor_sig, va_list args);
     };
 }
 

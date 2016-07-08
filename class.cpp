@@ -281,4 +281,12 @@ namespace natiflect {
         CheckCallMethodException(env_, "<init>", constructor_sig);
         return result;
     }
+
+    jobject Class::NewInstanceV(const char *constructor_sig, va_list args) {
+        jmethodID constructor = GetMethodID(env_, val_, "<init>", constructor_sig);
+        jobject result = env_->NewObjectV(val_, constructor, args);
+        va_end(args);
+        CheckCallMethodException(env_, "<init>", constructor_sig);
+        return result;
+    }
 }

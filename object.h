@@ -38,6 +38,8 @@ namespace natiflect {
     public:
         Object(JNIEnv *env, T val);
 
+        Object(JNIEnv *env, Class clz, const char *constructor_sig = "()V", ...);
+
 #pragma mark - Base
 
         T GetValue();
@@ -71,6 +73,44 @@ namespace natiflect {
         jdouble Call_D(const char *name, const char *sig = "()D", ...);
 
         jobject Call_L(const char *name, const char *sig, ...);
+
+#pragma mark - Instance Field
+
+        jboolean Get_Z(const char *name);
+
+        void Set_Z(const char *name, jboolean value);
+
+        jbyte Get_B(const char *name);
+
+        void Set_B(const char *name, jbyte value);
+
+        jchar Get_C(const char *name);
+
+        void Set_C(const char *name, jchar value);
+
+        jshort Get_S(const char *name);
+
+        void Set_S(const char *name, jshort value);
+
+        jint Get_I(const char *name);
+
+        void Set_I(const char *name, jint value);
+
+        jlong Get_J(const char *name);
+
+        void Set_J(const char *name, jlong value);
+
+        jfloat Get_F(const char *name);
+
+        void Set_F(const char *name, jfloat value);
+
+        jdouble Get_D(const char *name);
+
+        void Set_D(const char *name, jdouble value);
+
+        jobject Get_L(const char *name, const char *sig);
+
+        void Set_L(const char *name, const char *sig, jobject value);
 
     protected:
         Object() { };
