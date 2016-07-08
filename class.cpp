@@ -33,10 +33,7 @@ namespace natiflect {
     Class::Class(JNIEnv *env, const char *name) {
         env_ = env;
         val_ = env_->FindClass(name);
-        if (env_->ExceptionCheck()) {
-            env_->ExceptionClear();
-            throw NotFoundException(string("Cannot find class \"") + name + "\".");
-        }
+        CheckNotFoundException(env_, string("class \"") + name + "\"");
     }
 
 #pragma mark - Static Method
@@ -47,8 +44,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         env_->CallStaticVoidMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
     }
 
     jboolean Class::CallStatic_Z(const char *name, const char *sig, ...) {
@@ -57,8 +54,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         jboolean result = env_->CallStaticBooleanMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
         return result;
     }
 
@@ -68,8 +65,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         jbyte result = env_->CallStaticByteMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
         return result;
     }
 
@@ -79,8 +76,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         jchar result = env_->CallStaticCharMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
         return result;
     }
 
@@ -90,8 +87,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         jshort result = env_->CallStaticShortMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
         return result;
     }
 
@@ -101,8 +98,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         jint result = env_->CallStaticIntMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
         return result;
     }
 
@@ -112,8 +109,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         jlong result = env_->CallStaticLongMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
         return result;
     }
 
@@ -123,8 +120,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         jfloat result = env_->CallStaticFloatMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
         return result;
     }
 
@@ -134,8 +131,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         jdouble result = env_->CallStaticDoubleMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
         return result;
     }
 
@@ -145,8 +142,8 @@ namespace natiflect {
         va_list args;
         va_start(args, sig);
         jobject result = env_->CallStaticObjectMethodV(val_, method_id, args);
-        CheckCallMethodException(env_, name, sig, args, true);
         va_end(args);
+        CheckCallMethodException(env_, name, sig, true);
         return result;
     }
 
@@ -275,9 +272,13 @@ namespace natiflect {
         return Class(env_, env_->GetSuperclass(val_));
     }
 
-    jobject Class::NewInstance(const char *constructor_sig) {
-        jmethodID constructor = GetMethodID(env_, val_, "<init>", constructor_sig, true);
-        // TODO: call instance method
-        return nullptr;
+    jobject Class::NewInstance(const char *constructor_sig, ...) {
+        jmethodID constructor = GetMethodID(env_, val_, "<init>", constructor_sig);
+        va_list args;
+        va_start(args, constructor_sig);
+        jobject result = env_->NewObjectV(val_, constructor, args);
+        va_end(args);
+        CheckCallMethodException(env_, "<init>", constructor_sig);
+        return result;
     }
 }

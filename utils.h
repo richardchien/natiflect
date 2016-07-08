@@ -26,12 +26,17 @@
 #define NATIFLECT_UTILS_H
 
 #include <jni.h>
+#include <string>
+
+using namespace std;
 
 namespace natiflect {
 
+    void CheckNotFoundException(JNIEnv *env, string what);
+
     jmethodID GetMethodID(JNIEnv *env, jclass clz, const char *name, const char *sig, bool is_static = false);
 
-    void CheckCallMethodException(JNIEnv *env, const char *name, const char *sig, va_list args, bool is_static = false);
+    void CheckCallMethodException(JNIEnv *env, const char *name, const char *sig, bool is_static = false);
 
     jfieldID GetFieldID(JNIEnv *env, jclass clz, const char *name, const char *sig, bool is_static = false);
 

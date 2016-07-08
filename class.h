@@ -44,23 +44,23 @@ namespace natiflect {
 
 #pragma mark - Static Method
 
-        void CallStatic_V(const char *name, const char *sig, ...);
+        void CallStatic_V(const char *name, const char *sig = "()V", ...);
 
-        jboolean CallStatic_Z(const char *name, const char *sig, ...);
+        jboolean CallStatic_Z(const char *name, const char *sig = "()Z", ...);
 
-        jbyte CallStatic_B(const char *name, const char *sig, ...);
+        jbyte CallStatic_B(const char *name, const char *sig = "()B", ...);
 
-        jchar CallStatic_C(const char *name, const char *sig, ...);
+        jchar CallStatic_C(const char *name, const char *sig = "()C", ...);
 
-        jshort CallStatic_S(const char *name, const char *sig, ...);
+        jshort CallStatic_S(const char *name, const char *sig = "()S", ...);
 
-        jint CallStatic_I(const char *name, const char *sig, ...);
+        jint CallStatic_I(const char *name, const char *sig = "()I", ...);
 
-        jlong CallStatic_J(const char *name, const char *sig, ...);
+        jlong CallStatic_J(const char *name, const char *sig = "()J", ...);
 
-        jfloat CallStatic_F(const char *name, const char *sig, ...);
+        jfloat CallStatic_F(const char *name, const char *sig = "()F", ...);
 
-        jdouble CallStatic_D(const char *name, const char *sig, ...);
+        jdouble CallStatic_D(const char *name, const char *sig = "()D", ...);
 
         jobject CallStatic_L(const char *name, const char *sig, ...);
 
@@ -106,7 +106,7 @@ namespace natiflect {
 
         Class GetSuperClass();
 
-        jobject NewInstance(const char *constructor_sig);
+        jobject NewInstance(const char *constructor_sig = "()V", ...);
     };
 }
 

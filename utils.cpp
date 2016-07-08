@@ -24,14 +24,16 @@
 
 #include "utils.h"
 
-#include <string>
-#include <cstdarg>
-
 #include "exception.h"
 
-using namespace std;
-
 namespace natiflect {
+
+    void CheckNotFoundException(JNIEnv *env, string what) {
+        if (env->ExceptionCheck()) {
+            env->ExceptionClear();
+            throw NotFoundException(string("Cannot find ") + what + ".");
+        }
+    }
 
     jmethodID GetMethodID(JNIEnv *env, jclass clz, const char *name, const char *sig, bool is_static) {
         jmethodID method_id;
@@ -48,10 +50,9 @@ namespace natiflect {
         return method_id;
     }
 
-    void CheckCallMethodException(JNIEnv *env, const char *name, const char *sig, va_list args, bool is_static) {
+    void CheckCallMethodException(JNIEnv *env, const char *name, const char *sig, bool is_static) {
         if (env->ExceptionCheck()) {
             env->ExceptionClear();
-            va_end(args);
             throw InvokeException(string("Call") + (is_static ? " static " : " ") + "method \""
                                   + name + "\" with signature \"" + sig + "\" failed.");
         }
