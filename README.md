@@ -73,7 +73,6 @@ Note: Some C++ features have been used, so you must use Natiflect in C++.
 
 ## Usage
 
-在源文件头部包含头文件 `natiflect.h`，并根据需要添加 `using namespace natiflect;`。
 Include header file `natiflect.h` at the beginning of your source file, and add `using namespace natiflect;` as you need.
 
 ### Create Java objects
