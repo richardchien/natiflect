@@ -64,7 +64,7 @@ void TestObjectEquals(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -90,7 +90,7 @@ void TestObjectGetSetValue(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -109,7 +109,7 @@ void TestClassGetSuperClass(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -129,7 +129,7 @@ void TestClassNewInstance(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -156,7 +156,7 @@ void TestClassCallStatic_V(JNIEnv *env) {
             }
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -174,7 +174,7 @@ void TestClassCallStatic_Z(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -194,7 +194,7 @@ void TestClassCallStatic_B(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -213,7 +213,7 @@ void TestClassCallStatic_C(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -233,7 +233,7 @@ void TestClassCallStatic_S(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -251,7 +251,7 @@ void TestClassCallStatic_I(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -269,7 +269,7 @@ void TestClassCallStatic_J(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -287,7 +287,7 @@ void TestClassCallStatic_F(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -305,7 +305,7 @@ void TestClassCallStatic_D(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -324,7 +324,7 @@ void TestClassCallStatic_L(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -343,7 +343,7 @@ void TestClassGetSetStatic_Z(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -362,7 +362,7 @@ void TestClassGetSetStatic_B(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -381,7 +381,7 @@ void TestClassGetSetStatic_C(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -400,7 +400,7 @@ void TestClassGetSetStatic_S(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -419,7 +419,7 @@ void TestClassGetSetStatic_I(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -438,7 +438,7 @@ void TestClassGetSetStatic_J(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -457,7 +457,7 @@ void TestClassGetSetStatic_F(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -476,7 +476,7 @@ void TestClassGetSetStatic_D(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -497,7 +497,7 @@ void TestClassGetSetStatic_L(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -520,7 +520,7 @@ void TestObjectCall_V(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -539,7 +539,7 @@ void TestObjectCall_Z(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -558,7 +558,7 @@ void TestObjectCall_B(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -577,7 +577,7 @@ void TestObjectCall_C(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -596,7 +596,7 @@ void TestObjectCall_S(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -615,7 +615,7 @@ void TestObjectCall_I(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -634,7 +634,7 @@ void TestObjectCall_J(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -653,7 +653,7 @@ void TestObjectCall_F(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -672,7 +672,7 @@ void TestObjectCall_D(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -692,7 +692,7 @@ void TestObjectCall_L(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -712,7 +712,7 @@ void TestObjectGetSet_Z(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -732,7 +732,7 @@ void TestObjectGetSet_B(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -752,7 +752,7 @@ void TestObjectGetSet_C(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -772,7 +772,7 @@ void TestObjectGetSet_S(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -792,7 +792,7 @@ void TestObjectGetSet_I(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -812,7 +812,7 @@ void TestObjectGetSet_J(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -832,7 +832,7 @@ void TestObjectGetSet_F(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -852,7 +852,7 @@ void TestObjectGetSet_D(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
@@ -874,7 +874,7 @@ void TestObjectGetSet_L(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
-        cout << e.msg << endl;
+        cerr << e.msg << endl;
         passed = false;
     }
 
