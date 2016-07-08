@@ -10,7 +10,7 @@
 
 Android NDK 是使用 JNI 的，因此 Natiflect 也可以用于 NDK。
 
-注意：Natiflect 用到了很多 C++ 的特性，所以只支持 C++。
+注意：Natiflect 用到了一些 C++ 的特性，所以只支持 C++。
 
 ## 用法
 
@@ -69,7 +69,7 @@ It's quite a trouble to call Java methods in JNI and Natiflect is written to mak
 
 Android NDK is using JNI, thus Natiflect can be used in NDK development as well.
 
-Note: Some C++ features have been used, so you must use Natiflect in C++.
+Note: Some C++ features are used, so you must use Natiflect in C++.
 
 ## Usage
 
