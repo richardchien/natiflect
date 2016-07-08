@@ -7,8 +7,7 @@
 #include <iostream>
 #include <vector>
 
-#include "natiflect/object.h"
-#include "natiflect/class.h"
+#include "natiflect/natiflect.h"
 
 using namespace std;
 using namespace natiflect;
