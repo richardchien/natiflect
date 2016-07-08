@@ -61,6 +61,8 @@ str = (jstring) obj.Get_L("mString", "Ljava/lang/String;");
 
 还有一些其它函数的用法可以查看源码或在 test 分支查看 [`natiflect_test.cpp`](https://github.com/richardchien/natiflect/blob/test/jni/natiflect_test.cpp) 文件。
 
+---------
+
 <a name="en">
 
 It's quite a trouble to call Java methods in JNI and Natiflect is written to make that easy.
