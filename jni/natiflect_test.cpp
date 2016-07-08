@@ -6,13 +6,19 @@
 
 #include <iostream>
 
+#include "natiflect/object.h"
 #include "natiflect/class.h"
 
 using namespace std;
 using namespace natiflect;
 
+int total_count = 0;
+int passed_count = 0;
+
 void LogTestPass(string test_name, bool passed) {
-    cout << "Test \"" << test_name << "\" passed? " << (passed ? "YES" : "NO") << endl;
+    total_count++;
+    passed_count += passed;
+    cout << test_name << " passed? " << (passed ? "YES" : "NO") << endl;
 }
 
 void TestException(JNIEnv *env) {
@@ -39,6 +45,51 @@ void TestException(JNIEnv *env) {
     LogTestPass(TAG, passed);
 }
 
+void TestObjectEquals(JNIEnv *env) {
+    const string TAG = "TestObjectEquals";
+
+    bool passed = true;
+
+    try {
+        jclass clz1 = env->FindClass("java/lang/String");
+        jclass clz2 = env->FindClass("java/lang/String");
+        if (!(clz1 != clz2 && Object<jclass>(env, clz1).Equals(clz2))) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSetValue(JNIEnv *env) {
+    const string TAG = "TestObjectGetSetValue";
+
+    bool passed = true;
+
+    try {
+        jclass clz_string = env->FindClass("java/lang/String");
+        jstring str = env->NewStringUTF("abc");
+        jintArray int_arr = env->NewIntArray(1);
+        Object<jobject> obj(env, str);
+        if (obj.GetValue() != str) {
+            passed = false;
+        }
+        obj.SetValue(int_arr);
+        jclass clz_int_arr = env->GetObjectClass(int_arr);
+        if (!Class(env, clz_int_arr).Equals(obj.GetClass())) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
 void TestClassConstructor(JNIEnv *env) {
     const string TAG = "TestClassConstructor";
 
@@ -49,6 +100,7 @@ void TestClassConstructor(JNIEnv *env) {
         Class clz1(env, j_clz);
         Class clz2(env, "java/lang/String");
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -80,6 +132,26 @@ void TestClassGetSuperClass(JNIEnv *env) {
     LogTestPass(TAG, passed);
 }
 
+void TestClassNewInstance(JNIEnv *env) {
+    const string TAG = "TestClassNewInstance";
+
+    bool passed = true;
+
+    try {
+        jstring str1 = env->NewStringUTF("abc");
+        Class clz_string(env, "java/lang/String");
+        jstring str2 = (jstring) clz_string.NewInstance("(Ljava/lang/String;)V", str1);
+        if (env->GetStringLength(str2) != 3) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
 void TestClassCallStatic_V(JNIEnv *env) {
     const string TAG = "TestClassCallStatic_V";
 
@@ -100,6 +172,7 @@ void TestClassCallStatic_V(JNIEnv *env) {
             }
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -117,6 +190,7 @@ void TestClassCallStatic_Z(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -136,6 +210,7 @@ void TestClassCallStatic_B(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -154,6 +229,7 @@ void TestClassCallStatic_C(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -173,6 +249,7 @@ void TestClassCallStatic_S(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -190,6 +267,7 @@ void TestClassCallStatic_I(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -207,6 +285,7 @@ void TestClassCallStatic_J(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -224,6 +303,7 @@ void TestClassCallStatic_F(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -241,6 +321,7 @@ void TestClassCallStatic_D(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -259,6 +340,7 @@ void TestClassCallStatic_L(JNIEnv *env) {
             passed = false;
         }
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -277,6 +359,7 @@ void TestClassGetSetStatic_Z(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -295,6 +378,7 @@ void TestClassGetSetStatic_B(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -313,6 +397,7 @@ void TestClassGetSetStatic_C(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -331,6 +416,7 @@ void TestClassGetSetStatic_S(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -349,6 +435,7 @@ void TestClassGetSetStatic_I(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -367,6 +454,7 @@ void TestClassGetSetStatic_J(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -385,6 +473,7 @@ void TestClassGetSetStatic_F(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -403,6 +492,7 @@ void TestClassGetSetStatic_D(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -423,6 +513,202 @@ void TestClassGetSetStatic_L(JNIEnv *env) {
             passed = false;
         };
     } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_V(JNIEnv *env) {
+    const string TAG = "TestObjectCall_V";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        jintArray j_arr = env->NewIntArray(1);
+        Object<jobject>(env, obj).Call_V("testVoid", "([I)V", j_arr);
+        int arr[1];
+        env->GetIntArrayRegion(j_arr, 0, 1, arr);
+        if (arr[0] != 1) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_Z(JNIEnv *env) {
+    const string TAG = "TestObjectCall_Z";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        if (Object<jobject>(env, obj).Call_Z("testBoolean") != 1) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_B(JNIEnv *env) {
+    const string TAG = "TestObjectCall_B";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        if (Object<jobject>(env, obj).Call_B("testByte") != 1) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_C(JNIEnv *env) {
+    const string TAG = "TestObjectCall_C";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        if (Object<jobject>(env, obj).Call_C("testChar") != '1') {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_S(JNIEnv *env) {
+    const string TAG = "TestObjectCall_S";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        if (Object<jobject>(env, obj).Call_S("testShort") != 1) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_I(JNIEnv *env) {
+    const string TAG = "TestObjectCall_I";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        if (Object<jobject>(env, obj).Call_I("testInt") != 1) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_J(JNIEnv *env) {
+    const string TAG = "TestObjectCall_J";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        if (Object<jobject>(env, obj).Call_J("testLong") != 1) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_F(JNIEnv *env) {
+    const string TAG = "TestObjectCall_F";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        if (Object<jobject>(env, obj).Call_F("testFloat") != 1.5f) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_D(JNIEnv *env) {
+    const string TAG = "TestObjectCall_D";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        if (Object<jobject>(env, obj).Call_D("testDouble") != 1.5) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectCall_L(JNIEnv *env) {
+    const string TAG = "TestObjectCall_L";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        jobject obj = clz.NewInstance();
+        jstring str = (jstring) Object<jobject>(env, obj).Call_L("testString", "()Ljava/lang/String;");
+        if (env->GetStringLength(str) != 3) {
+            passed = false;
+        }
+    } catch (Exception e) {
+        cout << e.msg << endl;
         passed = false;
     }
 
@@ -434,8 +720,12 @@ extern "C" {
 JNIEXPORT void JNICALL Java_im_r_1c_java_Main_nativeTestAll(JNIEnv *env, jclass type) {
     TestException(env);
 
+    TestObjectEquals(env);
+    TestObjectGetSetValue(env);
+
     TestClassConstructor(env);
     TestClassGetSuperClass(env);
+    TestClassNewInstance(env);
 
     TestClassCallStatic_V(env);
     TestClassCallStatic_Z(env);
@@ -457,6 +747,19 @@ JNIEXPORT void JNICALL Java_im_r_1c_java_Main_nativeTestAll(JNIEnv *env, jclass 
     TestClassGetSetStatic_F(env);
     TestClassGetSetStatic_D(env);
     TestClassGetSetStatic_L(env);
+
+    TestObjectCall_V(env);
+    TestObjectCall_Z(env);
+    TestObjectCall_B(env);
+    TestObjectCall_C(env);
+    TestObjectCall_S(env);
+    TestObjectCall_I(env);
+    TestObjectCall_J(env);
+    TestObjectCall_F(env);
+    TestObjectCall_D(env);
+    TestObjectCall_L(env);
+
+    cout << endl << "Tested: " << total_count << ", Passed: " << passed_count << "." << endl;
 }
 
 }
