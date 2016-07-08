@@ -5,6 +5,7 @@
 #include "natiflect_test.h"
 
 #include <iostream>
+#include <vector>
 
 #include "natiflect/object.h"
 #include "natiflect/class.h"
@@ -15,9 +16,15 @@ using namespace natiflect;
 int total_count = 0;
 int passed_count = 0;
 
+vector<string> tests_not_passed;
+
 void LogTestPass(string test_name, bool passed) {
     total_count++;
-    passed_count += passed;
+    if (passed) {
+        passed_count++;
+    } else {
+        tests_not_passed.push_back(test_name);
+    }
     cout << test_name << " passed? " << (passed ? "YES" : "NO") << endl;
 }
 
@@ -85,29 +92,6 @@ void TestObjectGetSetValue(JNIEnv *env) {
     } catch (Exception e) {
         cout << e.msg << endl;
         passed = false;
-    }
-
-    LogTestPass(TAG, passed);
-}
-
-void TestClassConstructor(JNIEnv *env) {
-    const string TAG = "TestClassConstructor";
-
-    bool passed = true;
-
-    try {
-        jclass j_clz = env->FindClass("java/lang/String");
-        Class clz1(env, j_clz);
-        Class clz2(env, "java/lang/String");
-    } catch (Exception e) {
-        cout << e.msg << endl;
-        passed = false;
-    }
-
-    try {
-        Class clz(env, "java/lang/string"); // should fail
-        passed = false;
-    } catch (Exception e) {
     }
 
     LogTestPass(TAG, passed);
@@ -526,7 +510,7 @@ void TestObjectCall_V(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         jintArray j_arr = env->NewIntArray(1);
         Object<jobject>(env, obj).Call_V("testVoid", "([I)V", j_arr);
@@ -549,7 +533,7 @@ void TestObjectCall_Z(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         if (Object<jobject>(env, obj).Call_Z("testBoolean") != 1) {
             passed = false;
@@ -568,7 +552,7 @@ void TestObjectCall_B(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         if (Object<jobject>(env, obj).Call_B("testByte") != 1) {
             passed = false;
@@ -587,7 +571,7 @@ void TestObjectCall_C(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         if (Object<jobject>(env, obj).Call_C("testChar") != '1') {
             passed = false;
@@ -606,7 +590,7 @@ void TestObjectCall_S(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         if (Object<jobject>(env, obj).Call_S("testShort") != 1) {
             passed = false;
@@ -625,7 +609,7 @@ void TestObjectCall_I(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         if (Object<jobject>(env, obj).Call_I("testInt") != 1) {
             passed = false;
@@ -644,7 +628,7 @@ void TestObjectCall_J(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         if (Object<jobject>(env, obj).Call_J("testLong") != 1) {
             passed = false;
@@ -663,7 +647,7 @@ void TestObjectCall_F(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         if (Object<jobject>(env, obj).Call_F("testFloat") != 1.5f) {
             passed = false;
@@ -682,7 +666,7 @@ void TestObjectCall_D(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         if (Object<jobject>(env, obj).Call_D("testDouble") != 1.5) {
             passed = false;
@@ -701,12 +685,194 @@ void TestObjectCall_L(JNIEnv *env) {
     bool passed = true;
 
     try {
-        Class clz(env, "im/r_c/java/InstanceMethodTest");
+        Class clz(env, "im/r_c/java/ObjectTest");
         jobject obj = clz.NewInstance();
         jstring str = (jstring) Object<jobject>(env, obj).Call_L("testString", "()Ljava/lang/String;");
         if (env->GetStringLength(str) != 3) {
             passed = false;
         }
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSet_Z(JNIEnv *env) {
+    const string TAG = "TestObjectGetSet_Z";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/ObjectTest");
+        Object<jobject> obj(env, clz);
+        obj.Set_Z("mBoolean", 1);
+        if (obj.Get_Z("mBoolean") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSet_B(JNIEnv *env) {
+    const string TAG = "TestObjectGetSet_B";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/ObjectTest");
+        Object<jobject> obj(env, clz);
+        obj.Set_B("mByte", 1);
+        if (obj.Get_B("mByte") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSet_C(JNIEnv *env) {
+    const string TAG = "TestObjectGetSet_C";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/ObjectTest");
+        Object<jobject> obj(env, clz);
+        obj.Set_C("mChar", '1');
+        if (obj.Get_C("mChar") != '1') {
+            passed = false;
+        };
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSet_S(JNIEnv *env) {
+    const string TAG = "TestObjectGetSet_S";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/ObjectTest");
+        Object<jobject> obj(env, clz);
+        obj.Set_S("mShort", 1);
+        if (obj.Get_S("mShort") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSet_I(JNIEnv *env) {
+    const string TAG = "TestObjectGetSet_I";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/ObjectTest");
+        Object<jobject> obj(env, clz);
+        obj.Set_I("mInt", 1);
+        if (obj.Get_I("mInt") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSet_J(JNIEnv *env) {
+    const string TAG = "TestObjectGetSet_J";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/ObjectTest");
+        Object<jobject> obj(env, clz);
+        obj.Set_J("mLong", 1);
+        if (obj.Get_J("mLong") != 1) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSet_F(JNIEnv *env) {
+    const string TAG = "TestObjectGetSet_F";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/ObjectTest");
+        Object<jobject> obj(env, clz);
+        obj.Set_F("mFloat", 1.5f);
+        if (obj.Get_F("mFloat") != 1.5f) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSet_D(JNIEnv *env) {
+    const string TAG = "TestObjectGetSet_D";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/ObjectTest");
+        Object<jobject> obj(env, clz);
+        obj.Set_D("mDouble", 1.5);
+        if (obj.Get_D("mDouble") != 1.5) {
+            passed = false;
+        };
+    } catch (Exception e) {
+        cout << e.msg << endl;
+        passed = false;
+    }
+
+    LogTestPass(TAG, passed);
+}
+
+void TestObjectGetSet_L(JNIEnv *env) {
+    const string TAG = "TestObjectGetSet_L";
+
+    bool passed = true;
+
+    try {
+        Class clz(env, "im/r_c/java/ObjectTest");
+        Object<jobject> obj(env, clz);
+        jstring str = env->NewStringUTF("abc");
+        obj.Set_L("mObject", "Ljava/lang/Object;", str);
+        str = (jstring) obj.Get_L("mObject", "Ljava/lang/Object;");
+        if (env->GetStringLength(str) != 3) {
+            passed = false;
+        };
     } catch (Exception e) {
         cout << e.msg << endl;
         passed = false;
@@ -723,7 +889,6 @@ JNIEXPORT void JNICALL Java_im_r_1c_java_Main_nativeTestAll(JNIEnv *env, jclass 
     TestObjectEquals(env);
     TestObjectGetSetValue(env);
 
-    TestClassConstructor(env);
     TestClassGetSuperClass(env);
     TestClassNewInstance(env);
 
@@ -759,7 +924,23 @@ JNIEXPORT void JNICALL Java_im_r_1c_java_Main_nativeTestAll(JNIEnv *env, jclass 
     TestObjectCall_D(env);
     TestObjectCall_L(env);
 
+    TestObjectGetSet_Z(env);
+    TestObjectGetSet_B(env);
+    TestObjectGetSet_C(env);
+    TestObjectGetSet_S(env);
+    TestObjectGetSet_I(env);
+    TestObjectGetSet_J(env);
+    TestObjectGetSet_F(env);
+    TestObjectGetSet_D(env);
+    TestObjectGetSet_L(env);
+
     cout << endl << "Tested: " << total_count << ", Passed: " << passed_count << "." << endl;
+    if (tests_not_passed.size() > 0) {
+        cout << "Tests didn't passed:" << endl;
+    }
+    for (int i = 0; i < tests_not_passed.size(); i++) {
+        cout << tests_not_passed[i] << endl;
+    }
 }
 
 }

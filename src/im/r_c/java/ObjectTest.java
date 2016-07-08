@@ -4,7 +4,7 @@ package im.r_c.java;
  * NatiflectTest
  * Created by richard on 7/8/16.
  */
-public class InstanceMethodTest {
+public class ObjectTest {
     public void testVoid(int[] mark) {
         mark[0] = 1;
     }
@@ -44,4 +44,14 @@ public class InstanceMethodTest {
     public String testString() {
         return "abc";
     }
+
+    public boolean mBoolean = false;
+    public byte mByte = 0;
+    public char mChar = '0';
+    public short mShort = 0;
+    public int mInt = 0;
+    public long mLong = 0;
+    public float mFloat = 0.0f;
+    public double mDouble = 0.0;
+    public Object mObject = null;
 }
